@@ -1,16 +1,15 @@
 <component name="libraryTable">
   <library name="minim">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/Minim-master/library/minim.jar!/" />
-      <root url="jar://$USER_HOME$/Downloads/Minim-master/library/mp3spi1.9.5.jar!/" />
-      <root url="jar://$USER_HOME$/Downloads/Minim-master/library/tritonus_aos.jar!/" />
-      <root url="jar://$USER_HOME$/Downloads/Minim-master/library/tritonus_share.jar!/" />
-      <root url="jar://$USER_HOME$/Downloads/Minim-master/library/jsminim.jar!/" />
-      <root url="jar://$USER_HOME$/Downloads/Minim-master/library/jl1.0.1.jar!/" />
+      <root url="jar://C:/lib/sound/1.0/sound-1.0.jar!/" />
+      <root url="jar://C:/lib/sound/jsminim/1.0/jsminim-1.0.jar!/" />
+      <root url="jar://C:/lib/sound/jl/1.0/jl-1.0.jar!/" />
+      <root url="jar://C:/lib/sound/minim/1.0/minim-1.0.jar!/" />
+      <root url="jar://C:/lib/sound/mp3spi/1.9.4/mp3spi-1.9.4.jar!/" />
+      <root url="jar://C:/lib/sound/tritonus_aos/1.9.4/tritonus_aos-1.9.4.jar!/" />
+      <root url="jar://C:/lib/sound/tritonus_share/1.0/tritonus_share-1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/Downloads/Minim-master/library/jl1.0.1.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

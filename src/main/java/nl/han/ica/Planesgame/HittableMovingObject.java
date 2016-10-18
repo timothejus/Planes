@@ -11,8 +11,8 @@ public abstract class HittableMovingObject extends SpriteObject implements IColl
 
 	protected int speed;
 
-	public HittableMovingObject() {
-		super(new Sprite(""));
+	public HittableMovingObject(Sprite sprite) {
+		super(sprite);
 
 	}
 
