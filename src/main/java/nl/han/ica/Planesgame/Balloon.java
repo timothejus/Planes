@@ -7,13 +7,14 @@ import java.util.List;
 
 public class Balloon extends HittableMovingObject {
 
-	private int speed;
 	private PlanesApp world;
 
-	private HittableMovingObject hittableMovingObject;
-
-	public Balloon(Sprite sprite) {
-		super(sprite);
+	public Balloon(PlanesApp world) {
+		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/RedBalloon.png"));
+		this.world = world;
+		setySpeed(5);
+		setHeight(4);
+		setWidth(4);
 	}
 
 	@Override

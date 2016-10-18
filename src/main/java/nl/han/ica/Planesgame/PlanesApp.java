@@ -14,10 +14,11 @@ public class PlanesApp extends GameEngine {
 
 	@Override
 	public void setupGame() {
-
-        View view = new View(1366, 920);
+        View view = new View(1280, 720);
         setView(view);
         size(1366, 920);
+        Balloon b = new Balloon(this);
+        this.addGameObject(b);
 	}
 
 	@Override
