@@ -14,9 +14,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
 
 	public Plane(){
 		super(new Sprite(""));
-
-
-
 	}
 
 	public void objectWasHitByBullet(ICanShootBullets shooter) {
