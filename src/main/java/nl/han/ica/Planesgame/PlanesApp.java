@@ -1,6 +1,7 @@
 package nl.han.ica.Planesgame;
 
 import nl.han.ica.OOPDProcessingEngineHAN.Engine.GameEngine;
+import nl.han.ica.OOPDProcessingEngineHAN.View.View;
 import processing.core.PApplet;
 
 public class PlanesApp extends GameEngine {
@@ -14,6 +15,9 @@ public class PlanesApp extends GameEngine {
 	@Override
 	public void setupGame() {
 
+        View view = new View(1280, 720);
+        setView(view);
+        size(1280, 720);
 	}
 
 	@Override
