@@ -12,6 +12,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="core" level="project" />
     <orderEntry type="library" name="gifanimation-1.0" level="project" />
-    <orderEntry type="library" name="minim" level="project" />
+    <orderEntry type="library" name="tritonus_share-1.0" level="project" />
   </component>
 </module>

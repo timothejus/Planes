@@ -13,7 +13,6 @@ public abstract class HittableMovingObject extends SpriteObject implements IColl
 
 	public HittableMovingObject(Sprite sprite) {
 		super(sprite);
-
 	}
 
 	@Override
