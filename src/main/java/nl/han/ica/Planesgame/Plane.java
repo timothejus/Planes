@@ -12,7 +12,9 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
 
 	private int rotation;
 
-	private int player;
+	private int playerNumber;
+
+	private int score;
 
 	private HittableMovingObject hittableMovingObject;
 
@@ -34,6 +36,14 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
 
 	public void update() {
 
+	}
+
+	public void addPoint(){
+		score++;
+	}
+
+	public void removePoint(){
+		score--;
 	}
 
 }
