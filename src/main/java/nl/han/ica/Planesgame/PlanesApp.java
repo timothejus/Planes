@@ -15,9 +15,9 @@ public class PlanesApp extends GameEngine {
 	@Override
 	public void setupGame() {
 
-        View view = new View(1280, 720);
+        View view = new View(1366, 920);
         setView(view);
-        size(1280, 720);
+        size(1366, 920);
 	}
 
 	@Override
