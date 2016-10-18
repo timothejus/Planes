@@ -9,13 +9,16 @@ public class Bullet extends SpriteObject implements ICanShootBullets {
 
 	private int rotation;
 
-	public void getShooter() {
+	private ICanShootBullets shooter;
 
+	public ICanShootBullets getShooter() {
+		return shooter;
 	}
+
 
 	public Bullet(ICanShootBullets shooter) {
 		super(new Sprite(""));
-
+		this.shooter = shooter;
 	}
 
 
