@@ -21,7 +21,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
 	}
 
 	public void objectWasHitByBullet(ICanShootBullets shooter) {
-		
+
 	}
 
 	public void shoot() {
