@@ -12,9 +12,11 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
 	private int playerNumber;
 	private int score;
 
-	public Plane(){
-		super(new Sprite(""));
-
+	public Plane(PlanesApp app){
+		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/planesprite1.png"));
+		x = 50;
+		y = 50;
+		app.addGameObject(this, x,y);
 
 	}
 
