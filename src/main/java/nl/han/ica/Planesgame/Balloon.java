@@ -12,9 +12,7 @@ public class Balloon extends HittableMovingObject {
 	public Balloon(PlanesApp world) {
 		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/RedBalloon.png"));
 		this.world = world;
-		setySpeed(5);
-		setHeight(4);
-		setWidth(4);
+		setySpeed(-10 / 10f);
 	}
 
 	@Override
@@ -38,7 +36,7 @@ public class Balloon extends HittableMovingObject {
 
 	@Override
 	public void update() {
-		if (getY() <=0) {
+		if (getY() <=-200) {
 			world.deleteGameObject(this);
 		}
 	}
