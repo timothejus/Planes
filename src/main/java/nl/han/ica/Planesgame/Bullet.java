@@ -8,6 +8,7 @@ public class Bullet extends SpriteObject {
 	private int speed;
 
 	private int rotation;
+	private PlanesApp world;
 
 	private ICanShootBullets shooter;
 
@@ -16,13 +17,20 @@ public class Bullet extends SpriteObject {
 	}
 
 
-	public Bullet(ICanShootBullets shooter ) {
-		super(new Sprite(""));
+	public Bullet(PlanesApp world, ICanShootBullets shooter, int rotation) {
+		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/cannonbulletsprite.png"));
 		this.shooter = shooter;
+		this.rotation = rotation;
+		this.speed = shooter instanceof Plane ? -28 : -10;
+		setySpeed(speed);
+		this.world = world;
 	}
 
 	@Override
 	public void update() {
+		if (getY() <=0) {
+		world.deleteGameObject(this);
+	}
 
 	}
 }

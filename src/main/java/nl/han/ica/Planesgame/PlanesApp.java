@@ -21,6 +21,8 @@ public class PlanesApp extends GameEngine {
         Balloon b = new Balloon(this);
         this.addGameObject(b,300,920);
 		Plane plane = new Plane(this);
+		Cannon c =new Cannon(this);
+		this.addGameObject(c, 300,300);
 	}
 
 	@Override

@@ -1,16 +1,38 @@
 package nl.han.ica.Planesgame;
 
-public class Cannon extends SpriteObject implements ICanShootBullets {
+import nl.han.ica.OOPDProcessingEngineHAN.Alarm.Alarm;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
+import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
+
+public class Cannon extends SpriteObject implements ICanShootBullets, IAlarmListener{
 
 	PlanesApp world;
 
 	public Cannon(PlanesApp world){
+		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/cannonsprite.png"));
 		this.world = world;
-
+		startAlarm();
 	}
 
 	public void shoot() {
-		world.addGameObject(new Bullet(this));
+		world.addGameObject(new Bullet(world, this, 0));
 	}
 
+	@Override
+	public void update() {
+
+	}
+	private void startAlarm() {
+		Alarm alarm=new Alarm("New bullet",2);
+		alarm.addTarget(this);
+		alarm.start();
+	}
+
+	@Override
+	public void triggerAlarm(String alarmName) {
+		Bullet b=new Bullet(world, this, 0);
+		world.addGameObject(b, 300, 300);
+		startAlarm();
+	}
 }
