@@ -10,7 +10,7 @@ public class Cannon extends SpriteObject implements ICanShootBullets {
 	}
 
 	public void shoot() {
-
+		world.addGameObject(new Bullet(this));
 	}
 
 }
