@@ -21,7 +21,7 @@ public class Bullet extends SpriteObject {
 		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/cannonbulletsprite.png"));
 		this.shooter = shooter;
 		this.rotation = rotation;
-		this.speed = shooter instanceof Plane ? -28 : -10;
+		this.speed = shooter instanceof Plane ? -8 : -2;
 		setySpeed(speed);
 		this.world = world;
 	}
