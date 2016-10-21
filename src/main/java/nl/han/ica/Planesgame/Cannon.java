@@ -5,6 +5,8 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
 
+import java.util.Random;
+
 public class Cannon extends SpriteObject implements ICanShootBullets, IAlarmListener{
 
 	PlanesApp world;
@@ -24,7 +26,8 @@ public class Cannon extends SpriteObject implements ICanShootBullets, IAlarmList
 
 	}
 	private void startAlarm() {
-		Alarm alarm=new Alarm("New bullet",2);
+		//Alarm alarm=new Alarm("New bullet",3 + (int)(Math.random() * ((7 - 3) + 1)));
+		Alarm alarm=new Alarm("New bullet",3 + (Math.random() * ((7 - 3) + 1)));
 		alarm.addTarget(this);
 		alarm.start();
 	}
@@ -32,7 +35,7 @@ public class Cannon extends SpriteObject implements ICanShootBullets, IAlarmList
 	@Override
 	public void triggerAlarm(String alarmName) {
 		Bullet b=new Bullet(world, this, 0);
-		world.addGameObject(b, 300, 300);
+		world.addGameObject(b,x + 17,y, -1);
 		startAlarm();
 	}
 }
