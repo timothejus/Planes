@@ -22,7 +22,7 @@ public class PlanesApp extends GameEngine implements IAlarmListener {
 	public void setupGame() {
 
         View view = new View(1366, 920);
-		//view.setBackground(loadImage("src/main/java/nl/han/ica/Planesgame/resources/Background.png"));
+		view.setBackground(loadImage("src/main/java/nl/han/ica/Planesgame/resources/background.png"));
         setView(view);
         size(1366, 920);
         Balloon b = new Balloon(this);
