@@ -19,12 +19,12 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
     boolean thrustInOn;
     private float rotatiehoek = 0;
 
-    public Plane(PlanesApp app) {
-        super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/planesprite1.png"));
+    public Plane(PlanesApp app, String sprite, int playerNumber) {
+        super(new Sprite(sprite));
         this.app = app;
         x = 50;
         y = 50;
-        playerNumber = 1;
+        this.playerNumber = playerNumber;
         app.addGameObject(this, x, y);
 
     }
@@ -130,9 +130,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
             if (key == 'd') {
                 rotateRight = false;
             }
-            if (keyCode == app.SHIFT) {
-                //Shoot bullet
-            }
 
         } else if (playerNumber == 2) {
 
@@ -145,10 +142,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
             if (keyCode == app.RIGHT) {
                 rotateRight = false;
             }
-            if (key == ' ') {
-                //Shoot bullet
-            }
-
         }
     }
 
@@ -160,52 +153,63 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
         if (thrustInOn) {
 
             float beweeg = 3;
+            if (playerNumber == 1) {
+                if (rotatiehoek >= 0 && rotatiehoek < 90) {
+                    x = x + (float) (beweeg * Math.cos(Math.toRadians(rotatiehoek)));
+                    y = y + (float) (beweeg * Math.sin(Math.toRadians(rotatiehoek)));
+                } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
+                    x = x - (float)(beweeg * Math.sin(Math.toRadians(rotatiehoek - 90)));
+                    y = y + (float)(beweeg * Math.cos(Math.toRadians(rotatiehoek - 90)));
+                } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
+                    x = x - (float)(beweeg * Math.cos(Math.toRadians(rotatiehoek - 180)));
+                    y = y - (float)(beweeg * Math.sin(Math.toRadians(rotatiehoek - 180)));
+                } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
+                    x = x + (float)(beweeg * Math.sin(Math.toRadians(rotatiehoek - 270)));
+                    y = y - (float)(beweeg * Math.cos(Math.toRadians(rotatiehoek - 270)));
+                }
+            } else if (playerNumber == 2) {
 
-            if (rotatiehoek >= 0 && rotatiehoek < 90){
-                float gradeY = rotatiehoek;
-                float gradeX = Math.abs(rotatiehoek - 90);
+                if (rotatiehoek >= 0 && rotatiehoek < 90) {
+                    float gradeY = rotatiehoek;
+                    float gradeX = Math.abs(rotatiehoek - 90);
 
-                x = x + ((beweeg / 90) * gradeX);
-                y = y + ((beweeg / 90) * gradeY);
-            }
-            else if (rotatiehoek >= 90 && rotatiehoek < 180){
-                float rotatie = rotatiehoek - 90;
-                float gradeY = rotatie;
-                float gradeX = Math.abs(rotatie - 90);
+                    x = x - ((beweeg / 90) * gradeX);
+                    y = y - ((beweeg / 90) * gradeY);
+                } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
+                    float rotatie = rotatiehoek - 90;
+                    float gradeY = rotatie;
+                    float gradeX = Math.abs(rotatie - 90);
 
-                x = x - ((beweeg / 90) * gradeY);
-                y = y + ((beweeg / 90) * gradeX);
-            }
-            else if (rotatiehoek >= 180 && rotatiehoek < 270){
-                float rotatie = rotatiehoek - 180;
-                float gradeY = rotatie;
-                float gradeX = Math.abs(rotatie - 90);
+                    x = x + ((beweeg / 90) * gradeY);
+                    y = y - ((beweeg / 90) * gradeX);
+                } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
+                    float rotatie = rotatiehoek - 180;
+                    float gradeY = rotatie;
+                    float gradeX = Math.abs(rotatie - 90);
 
-                x = x - ((beweeg / 90) * gradeX);
-                y = y - ((beweeg / 90) * gradeY);
-            }
-            else if (rotatiehoek >= 270 && rotatiehoek <= 359){
-                float rotatie = rotatiehoek - 270;
-                float gradeY = rotatie;
-                float gradeX = Math.abs(rotatie - 90);
+                    x = x + ((beweeg / 90) * gradeX);
+                    y = y + ((beweeg / 90) * gradeY);
+                } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
+                    float rotatie = rotatiehoek - 270;
+                    float gradeY = rotatie;
+                    float gradeX = Math.abs(rotatie - 90);
 
-                x = x + ((beweeg / 90) * gradeY);
-                y = y - ((beweeg / 90) * gradeX);
+                    x = x - ((beweeg / 90) * gradeY);
+                    y = y + ((beweeg / 90) * gradeX);
+                }
             }
         }
         if (rotateLeft) {
-            if ((rotatiehoek - 1) < 0){
+            if ((rotatiehoek - 1) < 0) {
                 rotatiehoek = 359;
-            }
-            else {
+            } else {
                 rotatiehoek = rotatiehoek - 2;
             }
         }
         if (rotateRight) {
-            if ((rotatiehoek + 1) > 359){
+            if ((rotatiehoek + 1) > 359) {
                 rotatiehoek = 0;
-            }
-            else {
+            } else {
                 rotatiehoek = rotatiehoek + 2;
             }
         }
