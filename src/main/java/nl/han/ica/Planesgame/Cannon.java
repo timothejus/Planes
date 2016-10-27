@@ -18,7 +18,7 @@ public class Cannon extends SpriteObject implements ICanShootBullets, IAlarmList
 	}
 
 	public void shoot() {
-		world.addGameObject(new Bullet(world, this, 0));
+		world.addGameObject(new Bullet(world, this, 0, 2));
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class Cannon extends SpriteObject implements ICanShootBullets, IAlarmList
 
 	@Override
 	public void triggerAlarm(String alarmName) {
-		Bullet b=new Bullet(world, this, 0);
+		Bullet b=new Bullet(world, this, 0, 2);
 		world.addGameObject(b,x + 17,y, -1);
 		startAlarm();
 	}

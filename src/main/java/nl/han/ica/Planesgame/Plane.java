@@ -1,12 +1,12 @@
 package nl.han.ica.Planesgame;
 
+import javafx.scene.effect.Light;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class Plane extends HittableMovingObject implements ICanShootBullets {
 
-    private final PlanesApp app;
 
     private float ax;
     private float ay;
@@ -20,8 +20,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
     private float rotatiehoek = 0;
 
     public Plane(PlanesApp app, String sprite, int playerNumber) {
-        super(new Sprite(sprite));
-        this.app = app;
+        super(new Sprite(sprite), app);
         x = 50;
         y = 50;
         this.playerNumber = playerNumber;
@@ -73,12 +72,74 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
         return -(getHeight() / 2) + getCenterY();
     }
 
+    public float getBulletX() {
+        float distance;
+        if (playerNumber == 1) {
+            distance = 80;
+        } else {
+            distance = -80;
+        }
+
+        if (rotatiehoek >= 0 && rotatiehoek < 90) {
+            return  (float) (distance * Math.cos(Math.toRadians(rotatiehoek))) + getCenterX();
+        } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
+            return - (float) (distance * Math.sin(Math.toRadians(rotatiehoek - 90))) + getCenterX();
+        } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
+            return - (float) (distance * Math.cos(Math.toRadians(rotatiehoek - 180))) + getCenterX();
+        } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
+            return (float) (distance * Math.sin(Math.toRadians(rotatiehoek - 270))) + getCenterX();
+        }
+        return 0;
+    }
+
+    public float getBulletY() {
+        float distance;
+        if (playerNumber == 1) {
+            distance = 80;
+        } else {
+            distance = -80;
+        }
+
+        if (rotatiehoek >= 0 && rotatiehoek < 90) {
+            return (float) (distance * Math.sin(Math.toRadians(rotatiehoek))) + getCenterY();
+        } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
+            return (float) (distance * Math.cos(Math.toRadians(rotatiehoek - 90))) + getCenterY();
+        } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
+            return - (float) (distance * Math.sin(Math.toRadians(rotatiehoek - 180))) + getCenterY();
+        } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
+            return - (float) (distance * Math.cos(Math.toRadians(rotatiehoek - 270))) + getCenterY();
+        }
+        return 0;
+    }
+
     @Override
     public void objectWasHitByBullet(ICanShootBullets shooter) {
+
         System.out.println("Outch");
     }
 
     public void shoot() {
+        if (playerNumber == 1) {
+            float bulletRotation;
+
+            if (rotatiehoek + 90 >= 360) {
+                bulletRotation = rotatiehoek - 270;
+            } else {
+                bulletRotation = rotatiehoek + 90;
+            }
+
+            world.addGameObject(new Bullet(world, this, bulletRotation, 8), getBulletX(), getBulletY());
+        } else if (playerNumber == 2) {
+            float bulletRotation;
+
+            if (rotatiehoek - 90 < 0) {
+                bulletRotation = rotatiehoek + 270;
+            } else {
+                bulletRotation = rotatiehoek - 90;
+            }
+
+            world.addGameObject(new Bullet(world, this, bulletRotation, 8), getBulletX(), getBulletY());
+        }
 
     }
 
@@ -94,25 +155,23 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
             if (key == 'd') {
                 rotateRight = true;
             }
-            if (keyCode == app.TAB) {
-                System.out.print("Pew pew pew");
-                //Shoot bullet
+            if (key == 'z') {
+                shoot();
             }
 
         } else if (playerNumber == 2) {
 
-            if (keyCode == app.UP) {
+            if (keyCode == world.UP) {
                 thrustInOn = true;
             }
-            if (keyCode == app.LEFT) {
+            if (keyCode == world.LEFT) {
                 rotateLeft = true;
             }
-            if (keyCode == app.RIGHT) {
+            if (keyCode == world.RIGHT) {
                 rotateRight = true;
             }
-            if (key == ' ') {
-                System.out.print("Pew pew pew");
-                //Shoot bullet
+            if (key == '/') {
+                shoot();
             }
 
         }
@@ -133,13 +192,13 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
 
         } else if (playerNumber == 2) {
 
-            if (keyCode == app.UP) {
+            if (keyCode == world.UP) {
                 thrustInOn = false;
             }
-            if (keyCode == app.LEFT) {
+            if (keyCode == world.LEFT) {
                 rotateLeft = false;
             }
-            if (keyCode == app.RIGHT) {
+            if (keyCode == world.RIGHT) {
                 rotateRight = false;
             }
         }
@@ -151,52 +210,24 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
 
     public void update() {
         if (thrustInOn) {
-
-            float beweeg = 3;
+            float beweeg;
             if (playerNumber == 1) {
-                if (rotatiehoek >= 0 && rotatiehoek < 90) {
-                    x = x + (float) (beweeg * Math.cos(Math.toRadians(rotatiehoek)));
-                    y = y + (float) (beweeg * Math.sin(Math.toRadians(rotatiehoek)));
-                } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
-                    x = x - (float)(beweeg * Math.sin(Math.toRadians(rotatiehoek - 90)));
-                    y = y + (float)(beweeg * Math.cos(Math.toRadians(rotatiehoek - 90)));
-                } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
-                    x = x - (float)(beweeg * Math.cos(Math.toRadians(rotatiehoek - 180)));
-                    y = y - (float)(beweeg * Math.sin(Math.toRadians(rotatiehoek - 180)));
-                } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
-                    x = x + (float)(beweeg * Math.sin(Math.toRadians(rotatiehoek - 270)));
-                    y = y - (float)(beweeg * Math.cos(Math.toRadians(rotatiehoek - 270)));
-                }
-            } else if (playerNumber == 2) {
-
-                if (rotatiehoek >= 0 && rotatiehoek < 90) {
-                    float gradeY = rotatiehoek;
-                    float gradeX = Math.abs(rotatiehoek - 90);
-
-                    x = x - ((beweeg / 90) * gradeX);
-                    y = y - ((beweeg / 90) * gradeY);
-                } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
-                    float rotatie = rotatiehoek - 90;
-                    float gradeY = rotatie;
-                    float gradeX = Math.abs(rotatie - 90);
-
-                    x = x + ((beweeg / 90) * gradeY);
-                    y = y - ((beweeg / 90) * gradeX);
-                } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
-                    float rotatie = rotatiehoek - 180;
-                    float gradeY = rotatie;
-                    float gradeX = Math.abs(rotatie - 90);
-
-                    x = x + ((beweeg / 90) * gradeX);
-                    y = y + ((beweeg / 90) * gradeY);
-                } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
-                    float rotatie = rotatiehoek - 270;
-                    float gradeY = rotatie;
-                    float gradeX = Math.abs(rotatie - 90);
-
-                    x = x - ((beweeg / 90) * gradeY);
-                    y = y + ((beweeg / 90) * gradeX);
-                }
+                beweeg = 3;
+            } else {
+                beweeg = -3;
+            }
+            if (rotatiehoek >= 0 && rotatiehoek < 90) {
+                x = x + (float) (beweeg * Math.cos(Math.toRadians(rotatiehoek)));
+                y = y + (float) (beweeg * Math.sin(Math.toRadians(rotatiehoek)));
+            } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
+                x = x - (float) (beweeg * Math.sin(Math.toRadians(rotatiehoek - 90)));
+                y = y + (float) (beweeg * Math.cos(Math.toRadians(rotatiehoek - 90)));
+            } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
+                x = x - (float) (beweeg * Math.cos(Math.toRadians(rotatiehoek - 180)));
+                y = y - (float) (beweeg * Math.sin(Math.toRadians(rotatiehoek - 180)));
+            } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
+                x = x + (float) (beweeg * Math.sin(Math.toRadians(rotatiehoek - 270)));
+                y = y - (float) (beweeg * Math.cos(Math.toRadians(rotatiehoek - 270)));
             }
         }
         if (rotateLeft) {

@@ -10,15 +10,17 @@ import java.util.List;
 public abstract class HittableMovingObject extends SpriteObject implements ICollidableWithGameObjects {
 
 	protected int speed;
-
-	public HittableMovingObject(Sprite sprite) {
+	protected PlanesApp world;
+	public HittableMovingObject(Sprite sprite, PlanesApp world) {
 		super(sprite);
+		this.world = world;
 	}
 
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for(GameObject go : collidedGameObjects) {
 			if (go instanceof Bullet) {
+				world.deleteGameObject(go);
 				objectWasHitByBullet(((Bullet)go).getShooter());
 			}
 		}

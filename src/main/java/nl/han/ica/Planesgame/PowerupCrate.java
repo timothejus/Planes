@@ -8,8 +8,8 @@ public class PowerupCrate extends HittableMovingObject {
 
 	private HittableMovingObject shootableObject;
 
-	public PowerupCrate() {
-		super(new Sprite(""));
+	public PowerupCrate(PlanesApp world) {
+		super(new Sprite(""), world);
 	}
 
 	public void objectWasHitByBullet() {

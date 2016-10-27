@@ -10,7 +10,7 @@ public class Balloon extends HittableMovingObject {
 	private PlanesApp world;
 
 	public Balloon(PlanesApp world) {
-		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/balloonsprite.png"));
+		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/balloonsprite.png"), world);
 		this.world = world;
 		setySpeed(-10 / 10f);
 	}
