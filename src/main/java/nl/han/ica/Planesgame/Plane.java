@@ -113,7 +113,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets {
     }
 
     @Override
-    public void objectWasHitByBullet(ICanShootBullets shooter) {
+    public void objectWasHitByBullet(Bullet bullet) {
 
         System.out.println("Outch");
     }
