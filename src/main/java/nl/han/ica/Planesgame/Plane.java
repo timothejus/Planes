@@ -122,7 +122,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     }
 
     @Override
-    public void objectWasHitByBullet(ICanShootBullets shooter) {
+    public void objectWasHitByBullet(Bullet bullet) {
         world.deleteGameObject(this);
         Alarm respawntimer = new Alarm("respawntimer", 3);
         respawntimer.addTarget(this);
