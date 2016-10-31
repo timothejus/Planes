@@ -32,7 +32,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         this.playerNumber = playerNumber;
         app.addGameObject(this);
 
-        shootTimer = new Alarm("shootTimer", 1.5);
+        shootTimer = new Alarm("shootTimer", 1);
         shootTimer.addTarget(this);
 
     }
@@ -123,10 +123,13 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
 
     @Override
     public void objectWasHitByBullet(Bullet bullet) {
-        world.deleteGameObject(this);
-        Alarm respawntimer = new Alarm("respawntimer", 3);
-        respawntimer.addTarget(this);
-        respawntimer.start();
+        if (bullet.getShooter() != this) {
+            world.deleteGameObject(this);
+            world.deleteGameObject(bullet);
+            Alarm respawntimer = new Alarm("respawntimer", 3);
+            respawntimer.addTarget(this);
+            respawntimer.start();
+        }
     }
 
     @Override

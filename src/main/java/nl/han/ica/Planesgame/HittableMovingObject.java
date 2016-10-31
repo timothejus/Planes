@@ -20,7 +20,6 @@ public abstract class HittableMovingObject extends SpriteObject implements IColl
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for(GameObject go : collidedGameObjects) {
 			if (go instanceof Bullet) {
-				world.deleteGameObject(go);
 				objectWasHitByBullet(((Bullet)go));
 			}
 		}
