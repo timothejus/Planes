@@ -27,6 +27,10 @@ public class PlanesApp extends GameEngine implements IAlarmListener {
         size(1366, 920);
         Balloon b = new Balloon(this);
         this.addGameObject(b,300,920);
+
+		PowerupCrate p = new PowerupCrate(this);
+		this.addGameObject(p,300,0);
+
 		Plane plane = new Plane(this, "src/main/java/nl/han/ica/Planesgame/resources/planesprite1.png", 1);
 		Plane plane2 = new Plane(this, "src/main/java/nl/han/ica/Planesgame/resources/planesprite2.png", 2);
 		startAlarm();

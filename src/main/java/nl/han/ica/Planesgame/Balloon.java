@@ -19,7 +19,7 @@ public class Balloon extends HittableMovingObject {
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for (GameObject go : collidedGameObjects) {
 			if(go instanceof Bullet){
-				objectWasHitByBullet(((Bullet) go).getShooter());
+				objectWasHitByBullet(((Bullet) go));
 			}
 			else if(go instanceof Plane){
 				((Plane) go).addPoint();
@@ -28,8 +28,8 @@ public class Balloon extends HittableMovingObject {
 	}
 
 	@Override
-	public void objectWasHitByBullet(ICanShootBullets shooter) {
-		if(shooter instanceof Plane) {
+	public void objectWasHitByBullet(Bullet bullet) {
+		if(bullet.getShooter() instanceof Plane) {
 			world.deleteGameObject(this);
 		}
 	}

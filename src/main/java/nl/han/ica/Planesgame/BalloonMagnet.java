@@ -1,6 +1,15 @@
 package nl.han.ica.Planesgame;
 
-public class BalloonMagnet implements IPowerUps {
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
+import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
+
+public class BalloonMagnet extends SpriteObject implements IPowerUps {
+	private PlanesApp world;
+
+	public BalloonMagnet(PlanesApp world){
+		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/magnetsprite.png"));
+		this.world = world;
+	}
 
 	public void applyPowerUp(Plane plane) {
 
@@ -14,4 +23,9 @@ public class BalloonMagnet implements IPowerUps {
 
 	}
 
+	@Override
+	public void update() {
+
+	}
 }
+
