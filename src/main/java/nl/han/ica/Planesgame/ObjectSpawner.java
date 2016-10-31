@@ -6,27 +6,27 @@ import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
 import java.util.ArrayList;
 
 /**
- * Created by tim_h on 31-10-2016.
+ * Created by Tim Hendriksen on 31-10-2016.
  */
 public class ObjectSpawner implements IAlarmListener {
 
-    ArrayList<Cannon> cannons = new ArrayList<>();
-    PlanesApp world;
+    private ArrayList<Cannon> cannons = new ArrayList<>();
+    private PlanesApp world;
 
     public ObjectSpawner(PlanesApp world){
         this.world = world;
     }
 
     public void start() {
-        Alarm cannonAlarm = new Alarm("cannon",10 + (int)(Math.random() * ((20 - 10) + 1)));
+        Alarm cannonAlarm = new Alarm("cannon", 30);
         cannonAlarm.addTarget(this);
         cannonAlarm.start();
 
-        Alarm balloonAlarm = new Alarm("balloon",10 + (int)(Math.random() * ((20 - 10) + 1)));
+        Alarm balloonAlarm = new Alarm("balloon", 20 + (int)(Math.random() * ((20 - 10) + 1)));
         balloonAlarm.addTarget(this);
         balloonAlarm.start();
 
-        Alarm powerupAlarm = new Alarm("powerup",10 + (int)(Math.random() * ((20 - 10) + 1)));
+        Alarm powerupAlarm = new Alarm("powerup", 40 + (int)(Math.random() * ((20 - 10) + 1)));
         powerupAlarm.addTarget(this);
         powerupAlarm.start();
 

@@ -11,11 +11,6 @@ public class BalloonMagnet extends SpriteObject implements IPowerUps {
 		this.world = world;
 	}
 
-	public void applyPowerUp(Plane plane) {
-
-	}
-
-
 	/**
 	 * @see IPowerUps#applyPowerUp()
 	 */

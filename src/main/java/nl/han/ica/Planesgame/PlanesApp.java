@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class PlanesApp extends GameEngine {
 
 	private Plane plane;
-	ArrayList<Cannon> cannons = new ArrayList<>();
 	private ObjectSpawner objectSpawner;
 
 	public static void main(String[] args) {
