@@ -22,7 +22,7 @@ public class ObjectSpawner implements IAlarmListener {
         cannonAlarm.addTarget(this);
         cannonAlarm.start();
 
-        Alarm balloonAlarm = new Alarm("balloon", 20 + (int)(Math.random() * ((20 - 10) + 1)));
+        Alarm balloonAlarm = new Alarm("balloon", 1 + (int)(Math.random() * ((20 - 10) + 1)));
         balloonAlarm.addTarget(this);
         balloonAlarm.start();
 
@@ -58,26 +58,25 @@ public class ObjectSpawner implements IAlarmListener {
         world.addGameObject(b,(int)(Math.random() * ((1340) + 1)),920);
     }
 
-    private void spawnCannon(){
-        float xPos = 40 + (int)(Math.random() * ((1340 - 40) + 1));
+    private void spawnCannon() {
+        float xPos = 40 + (int) (Math.random() * ((1340 - 40) + 1));
         boolean canPlace = true;
 
-        for(Cannon cannon : cannons){
-            if(xPos > cannon.getX() - 60 && xPos < cannon.getX() + 70){
+        for (Cannon cannon : cannons) {
+            if (xPos > cannon.getX() - 60 && xPos < cannon.getX() + 70) {
                 canPlace = false;
                 break;
             }
         }
 
-        if(canPlace){
+        if (canPlace) {
             Cannon newCannon = new Cannon(world);
             world.addGameObject(newCannon, xPos, 870);
             cannons.add(newCannon);
         }
 
-        if(cannons.size() <= 13){
+        if (cannons.size() <= 13) {
             start();
         }
     }
-
 }

@@ -22,9 +22,14 @@ public abstract class HittableMovingObject extends SpriteObject implements IColl
 			if (go instanceof Bullet) {
 				objectWasHitByBullet(((Bullet)go));
 			}
+			if(go instanceof IPowerUps){
+				objectCollidedWithPowerUp(((IPowerUps)go));
+			}
 		}
 	}
 
 	public abstract void objectWasHitByBullet(Bullet bullet);
+
+	public void objectCollidedWithPowerUp(IPowerUps powerUp){};
 
 }

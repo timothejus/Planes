@@ -7,8 +7,11 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
+import java.util.ArrayList;
+
 public class Plane extends HittableMovingObject implements ICanShootBullets, IAlarmListener {
 
+    private ArrayList<IPowerUps> powerups = new ArrayList<>();
     private float xSpeed;
     private float ySpeed;
     private float xMaxSpeed;
@@ -16,12 +19,13 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     private float acceleration = (float) 0.1;
     private int playerNumber;
     private int score;
-    boolean rotateRight;
-    boolean rotateLeft;
-    boolean thrustInOn;
-    boolean canShoot = true;
+    private boolean rotateRight;
+    private boolean rotateLeft;
+    private boolean thrustInOn;
+    private boolean canShoot = true;
     private float rotatiehoek = 0;
-    Alarm shootTimer;
+    private boolean destructible = true;
+    private Alarm shootTimer;
 
     public Plane(PlanesApp app, String sprite, int playerNumber) {
         super(new Sprite(sprite), app);
@@ -34,7 +38,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
 
         shootTimer = new Alarm("shootTimer", 1);
         shootTimer.addTarget(this);
-
     }
 
     @Override
@@ -81,7 +84,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         return -(getHeight() / 2) + getCenterY();
     }
 
-    public float getBulletX() {
+    private float getBulletX() {
         float distance;
         if (playerNumber == 1) {
             distance = 80;
@@ -101,7 +104,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         return 0;
     }
 
-    public float getBulletY() {
+    private float getBulletY() {
         float distance;
         if (playerNumber == 1) {
             distance = 80;
@@ -124,11 +127,13 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     @Override
     public void objectWasHitByBullet(Bullet bullet) {
         if (bullet.getShooter() != this) {
-            world.deleteGameObject(this);
-            world.deleteGameObject(bullet);
-            Alarm respawntimer = new Alarm("respawntimer", 3);
-            respawntimer.addTarget(this);
-            respawntimer.start();
+            if (destructible) {
+                world.deleteGameObject(this);
+                world.deleteGameObject(bullet);
+                Alarm respawntimer = new Alarm("respawntimer", 3);
+                respawntimer.addTarget(this);
+                respawntimer.start();
+            }
         }
     }
 
@@ -148,7 +153,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         if(alarmName == "shootTimer"){
             canShoot = true;
         }
-
     }
 
     public void shoot() {
@@ -178,6 +182,11 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
             shootTimer.start();
         }
     }
+
+    public void setDestructible(boolean bool){
+        destructible = bool;
+    }
+
 
     @Override
     public void keyPressed(int keyCode, char key) {
@@ -238,10 +247,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
                 rotateRight = false;
             }
         }
-    }
-
-    public void tileCollisionOccurred() {
-
     }
 
     public void update() {
@@ -311,6 +316,10 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
                 rotatiehoek = rotatiehoek + 2;
             }
         }
+
+        for(IPowerUps p : powerups){
+            p.applyPowerUp(this);
+        }
     }
 
     public void addPoint() {
@@ -319,6 +328,12 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
 
     public void removePoint() {
         score--;
+    }
+
+    @Override
+    public void objectCollidedWithPowerUp(IPowerUps powerUp){
+        powerups.add(powerUp);
+        powerUp.delete();
     }
 
 }

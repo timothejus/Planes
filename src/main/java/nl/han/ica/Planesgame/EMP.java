@@ -12,10 +12,15 @@ public class EMP extends SpriteObject implements IPowerUps {
 	}
 
 	/**
-	 * @see IPowerUps#applyPowerUp()
+	 * @see IPowerUps#applyPowerUp(Plane)
 	 */
-	public void applyPowerUp() {
+	public void applyPowerUp(Plane p) {
+		System.out.println("EMP");
+	}
 
+	@Override
+	public void delete() {
+		world.deleteGameObject(this);
 	}
 
 	@Override
