@@ -11,30 +11,49 @@ import java.util.ArrayList;
 
 public class PlanesApp extends GameEngine {
 
-	private Plane plane;
-	private ObjectSpawner objectSpawner;
+    private Plane plane;
+    private ObjectSpawner objectSpawner;
+    public Scoreboard scoreboard;
+    public final int Worldwidth = 1366;
+    public final int Worldheight = 920;
+    private AnnouncementText annoucementText;
+    private View view;
+    private Boolean isPlaying = false;
 
-	public static void main(String[] args) {
-		PApplet.main(new String[]{"nl.han.ica.Planesgame.PlanesApp"});
-	}
+    public static void main(String[] args) {
+        PApplet.main(new String[]{"nl.han.ica.Planesgame.PlanesApp"});
+    }
 
-	@Override
-	public void setupGame() {
-
-		objectSpawner = new ObjectSpawner(this);
-		objectSpawner.start();
-
-        View view = new View(1366, 920);
-		view.setBackground(loadImage("src/main/java/nl/han/ica/Planesgame/resources/background.png"));
+    @Override
+    public void setupGame() {
+        view = new View(Worldwidth, Worldheight);
         setView(view);
-        size(1366, 920);
+        size(Worldwidth, Worldheight);
+        annoucementText = new AnnouncementText(this);
+        annoucementText.showStartText();
 
-		Plane plane = new Plane(this, "src/main/java/nl/han/ica/Planesgame/resources/planesprite1.png", 1);
-		Plane plane2 = new Plane(this, "src/main/java/nl/han/ica/Planesgame/resources/planesprite2.png", 2);
 
-	}
 
-	@Override
-	public void update() {
-	}
+    }
+    public boolean getIsPlaying(){
+        return isPlaying;
+    }
+
+    public void startGame(int winningScore) {
+        isPlaying = true;
+        annoucementText.hideStartText();
+        objectSpawner = new ObjectSpawner(this);
+        objectSpawner.start();
+        scoreboard = new Scoreboard(this, winningScore);
+        addGameObject(scoreboard);
+
+        view.setBackground(loadImage("src/main/java/nl/han/ica/Planesgame/resources/background.png"));
+
+        Plane plane = new Plane(this, "src/main/java/nl/han/ica/Planesgame/resources/planesprite1.png", 1, 50, 200);
+        Plane plane2 = new Plane(this, "src/main/java/nl/han/ica/Planesgame/resources/planesprite2.png", 2, 1200, 200);
+    }
+
+    @Override
+    public void update() {
+    }
 }

@@ -5,8 +5,30 @@ import processing.core.PGraphics;
 
 public class Scoreboard extends GameObject {
 
-    public Scoreboard() {
+    String text;
+    private int p1 = 0;
+    private int p2 = 0;
 
+    public Scoreboard(PlanesApp world, int winningScore) {
+
+    }
+
+    public void scorePoint(int playernumber){
+        if (playernumber == 1){
+            p1++;
+        }
+        else if (playernumber == 2) {
+            p2++;
+        }
+    }
+
+    public void reportDeath(int playernumber){
+        if (playernumber == 1){
+            p2++;
+        }
+        else if (playernumber == 2) {
+            p1++;
+        }
     }
 
     @Override
@@ -14,8 +36,12 @@ public class Scoreboard extends GameObject {
 
     }
 
+
     @Override
     public void draw(PGraphics g) {
-
+        text = "Scoreboard\nPlayer1: " + p1 + "\nPlayer2: " + p2;
+        g.textAlign(g.LEFT,g.TOP);
+        g.textSize(20);
+        g.text(text,getX(),getY());
     }
 }

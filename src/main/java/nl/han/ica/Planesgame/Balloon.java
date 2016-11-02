@@ -25,6 +25,7 @@ public class Balloon extends HittableMovingObject {
 				((Plane) go).addPoint();
 			}
 		}
+		world.deleteGameObject(this);
 	}
 
 	@Override

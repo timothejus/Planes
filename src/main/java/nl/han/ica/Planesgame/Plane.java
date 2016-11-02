@@ -17,6 +17,8 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     private float xMaxSpeed;
     private float yMaxSpeed;
     private float acceleration = (float) 0.1;
+    private float spawnpointX;
+    private float spawnpointY;
     private int playerNumber;
     private int score;
     private boolean rotateRight;
@@ -27,14 +29,14 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     private boolean destructible = true;
     private Alarm shootTimer;
 
-    public Plane(PlanesApp app, String sprite, int playerNumber) {
+    public Plane(PlanesApp app, String sprite, int playerNumber, float spawnpointX, float spawnpointY) {
         super(new Sprite(sprite), app);
-        x = 50;
-        y = 100;
-        xSpeed = 2;
-        ySpeed = -2;
+        this.spawnpointX = spawnpointX;
+        this.spawnpointY = spawnpointY;
+        xSpeed = 0;
+        ySpeed = -4;
         this.playerNumber = playerNumber;
-        app.addGameObject(this);
+        app.addGameObject(this, spawnpointX, spawnpointY);
 
         shootTimer = new Alarm("shootTimer", 1);
         shootTimer.addTarget(this);
@@ -127,27 +129,34 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     @Override
     public void objectWasHitByBullet(Bullet bullet) {
         if (bullet.getShooter() != this) {
+            world.deleteGameObject(bullet);
             if (destructible) {
-                world.deleteGameObject(this);
-                world.deleteGameObject(bullet);
-                Alarm respawntimer = new Alarm("respawntimer", 3);
-                respawntimer.addTarget(this);
-                respawntimer.start();
+                explode();
             }
         }
+    }
+
+    public void explode(){
+        world.scoreboard.reportDeath(playerNumber);
+        world.deleteGameObject(this);
+        Alarm respawntimer = new Alarm("respawntimer", 3);
+        respawntimer.addTarget(this);
+        respawntimer.start();
     }
 
     @Override
     public void triggerAlarm(String alarmName) {
         if (alarmName == "respawntimer") {
-            x = 50;
-            y = 100;
-            xSpeed = 2;
+            x = spawnpointX;
+            y = spawnpointY;
+            xSpeed = 0;
             ySpeed = -2;
             rotatiehoek = 0;
             thrustInOn = false;
             rotateLeft = false;
             rotateRight = false;
+            canShoot = true;
+            destructible = true;
             world.addGameObject(this);
         }
         if(alarmName == "shootTimer"){
@@ -302,6 +311,10 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         x = x + xSpeed;
         y = y + ySpeed;
 
+        if (y > world.height - 100){
+            explode();
+        }
+
         if (rotateLeft) {
             if ((rotatiehoek - 1) < 0) {
                 rotatiehoek = 359;
@@ -323,12 +336,9 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     }
 
     public void addPoint() {
-        score++;
+        world.scoreboard.scorePoint(playerNumber);
     }
 
-    public void removePoint() {
-        score--;
-    }
 
     @Override
     public void objectCollidedWithPowerUp(IPowerUps powerUp){
