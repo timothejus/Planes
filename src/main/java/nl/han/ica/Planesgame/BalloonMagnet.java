@@ -7,29 +7,28 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 import java.util.ArrayList;
 import java.util.Vector;
 
+/**
+ * @author Tim Hendriksen
+ * When collected bij a plane all the balloons are attracted by the plane.
+ */
 public class BalloonMagnet extends SpriteObject implements IPowerUps {
 
 	private PlanesApp world;
 
 
+	/**
+	 *
+	 * @param world
+	 */
 	public BalloonMagnet(PlanesApp world){
 		super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/magnetsprite.png"));
 		this.world = world;
 	}
 
 	/**
+	 * Changes the balloons velocity to go towards the plane
 	 * @see IPowerUps#applyPowerUp(Plane)
 	 */
-
-//	Exception in thread "Thread-5" java.util.ConcurrentModificationException
-//	at java.util.Vector$Itr.checkForComodification(Vector.java:1184)
-//	at java.util.Vector$Itr.next(Vector.java:1137)
-//	at nl.han.ica.Planesgame.BalloonMagnet.applyPowerUp(BalloonMagnet.java:25)
-//	at nl.han.ica.Planesgame.Plane.update(Plane.java:334)
-//	at nl.han.ica.OOPDProcessingEngineHAN.Engine.GameEngine.updateGameObjects(GameEngine.java:309)
-//	at nl.han.ica.OOPDProcessingEngineHAN.Engine.GameEngine.updateGame(GameEngine.java:269)
-//	at nl.han.ica.OOPDProcessingEngineHAN.Engine.GameThread.run(GameThread.java:81)
-//	at java.lang.Thread.run(Thread.java:745)
 	public void applyPowerUp(Plane p) {
 		Vector<GameObject> gos = world.getGameObjectItems();
 		for(GameObject go : gos){

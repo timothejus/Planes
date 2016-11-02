@@ -3,12 +3,20 @@ package nl.han.ica.Planesgame;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import processing.core.PGraphics;
 
+/**
+ * @author Rogier Grobbee
+ */
 public class Scoreboard extends GameObject {
 
     String text;
     private int p1 = 0;
     private int p2 = 0;
 
+    /**
+     *
+     * @param world
+     * @param winningScore
+     */
     public Scoreboard(PlanesApp world, int winningScore) {
 
     }

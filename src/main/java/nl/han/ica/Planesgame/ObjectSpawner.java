@@ -6,17 +6,26 @@ import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
 import java.util.ArrayList;
 
 /**
- * Created by Tim Hendriksen on 31-10-2016.
+ * @author Tim Hendriksen
+ * Spawns the objects: Cannons, Balloons and Powerups
  */
 public class ObjectSpawner implements IAlarmListener {
 
     private ArrayList<Cannon> cannons = new ArrayList<>();
     private PlanesApp world;
 
+
+    /**
+     *
+     * @param world
+     */
     public ObjectSpawner(PlanesApp world){
         this.world = world;
     }
 
+    /**
+     * Start the timers for objects
+     */
     public void start() {
         Alarm cannonAlarm = new Alarm("cannon", 30);
         cannonAlarm.addTarget(this);
@@ -34,7 +43,6 @@ public class ObjectSpawner implements IAlarmListener {
 
     @Override
     public void triggerAlarm(String alarmName) {
-
         switch(alarmName){
             case "cannon":
                 spawnCannon();

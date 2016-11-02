@@ -5,6 +5,10 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
+/**
+ * @author Rogier Grobbee
+ * The bullet, fired by the cannons and the planes
+ */
 public class Bullet extends SpriteObject {
 
     private int speed;
@@ -14,7 +18,13 @@ public class Bullet extends SpriteObject {
 
     private ICanShootBullets shooter;
 
-
+    /**
+     *
+     * @param world
+     * @param shooter
+     * @param rotation
+     * @param speed
+     */
     public Bullet(PlanesApp world, ICanShootBullets shooter, float rotation, int speed) {
         super(new Sprite("src/main/java/nl/han/ica/Planesgame/resources/cannonbulletsprite.png"));
         this.shooter = shooter;
@@ -50,7 +60,7 @@ public class Bullet extends SpriteObject {
         g.popMatrix();
     }
 
-    public static float getRotationInRadians(float rotationInDegrees) {
+    private static float getRotationInRadians(float rotationInDegrees) {
         float rotationInRadians = (float) (PApplet.radians(rotationInDegrees) % Math.PI);
 
         rotationInRadians = (float) (((rotationInRadians > Math.PI * 0.5 && rotationInRadians < Math.PI * 1)
@@ -59,6 +69,10 @@ public class Bullet extends SpriteObject {
         return rotationInRadians;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public float getWidth() {
         // met dank aan
@@ -68,17 +82,29 @@ public class Bullet extends SpriteObject {
                 Math.cos(rotationInRadians) * width);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public float getHeight() {
         float rotationInRadians = getRotationInRadians(rotation);
         return (float) (Math.sin(rotationInRadians) * width + Math.cos(rotationInRadians) * height);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public float getX() {
         return -(getWidth() / 2) + getCenterX();
     }
 
+    /**
+     *
+     * @return float
+     */
     @Override
     public float getY() {
         return -(getHeight() / 2) + getCenterY();

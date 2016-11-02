@@ -6,17 +6,23 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.GameObject;
 import processing.core.PGraphics;
 
 /**
- * Created by rgrob on 01/11/2016.
+ * @author Rogier Grobbee
+ * The textst that is displayed before the game starts
  */
 public class AnnouncementText extends GameObject implements IAlarmListener {
 
-    String text;
+    private String text;
     private int p1 = 0;
     private int p2 = 0;
-    String startText = "TO START:\n" +
+    private final String startText = "TO START:\n" +
             "PRESS ANY NUMBER TO SET THE WINNING SCORE";
-    boolean startTextIsShowing;
+    private boolean startTextIsShowing;
     private PlanesApp world;
+
+    /**
+     *
+     * @param world
+     */
     public AnnouncementText(PlanesApp world) {
         this.world = world;
         world.addGameObject(this);
@@ -24,9 +30,14 @@ public class AnnouncementText extends GameObject implements IAlarmListener {
         y = world.Worldheight / 2;
     }
 
+    /**
+     *
+     * @param text
+     */
     public void setText(String text) {
         this.text = text;
     }
+
     @Override
     public void keyPressed(int keyCode, char key) {
         if (!world.getIsPlaying()) {
@@ -36,6 +47,9 @@ public class AnnouncementText extends GameObject implements IAlarmListener {
         }
     }
 
+    /**
+     * Shows the start text.
+     */
     public void showStartText() {
         text =  startText;
         startTextIsShowing = true;
@@ -44,6 +58,9 @@ public class AnnouncementText extends GameObject implements IAlarmListener {
         startTextOff.start();
     }
 
+    /**
+     * Hides the start text
+     */
     public void hideStartText() {
         startTextIsShowing = false;
         text = "";
@@ -63,6 +80,10 @@ public class AnnouncementText extends GameObject implements IAlarmListener {
         g.text(text,getX(), getY());
     }
 
+    /**
+     * Makes the text blink
+     * @param alarmName
+     */
     @Override
     public void triggerAlarm(String alarmName) {
         if(alarmName == "startTextOn") {

@@ -9,6 +9,10 @@ import processing.core.PGraphics;
 
 import java.util.ArrayList;
 
+/**
+ * @author Rogier Grobbee
+ * The plane is being controlled by the player
+ */
 public class Plane extends HittableMovingObject implements ICanShootBullets, IAlarmListener {
 
     private ArrayList<IPowerUps> powerups = new ArrayList<>();
@@ -29,6 +33,14 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     private boolean destructible = true;
     private Alarm shootTimer;
 
+    /**
+     *
+     * @param app
+     * @param sprite
+     * @param playerNumber
+     * @param spawnpointX
+     * @param spawnpointY
+     */
     public Plane(PlanesApp app, String sprite, int playerNumber, float spawnpointX, float spawnpointY) {
         super(new Sprite(sprite), app);
         this.spawnpointX = spawnpointX;
@@ -55,13 +67,17 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
 
     }
 
-    public static float getRotationInRadians(float rotationInDegrees) {
+    private static float getRotationInRadians(float rotationInDegrees) {
         float rotationInRadians = (float) (PApplet.radians(rotationInDegrees) % Math.PI);
         rotationInRadians = (float) (((rotationInRadians > Math.PI * 0.5 && rotationInRadians < Math.PI * 1) || (rotationInRadians > Math.PI * 1.5 && rotationInRadians < Math.PI * 2)) ? Math.PI - rotationInRadians : rotationInRadians);
 
         return rotationInRadians;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public float getWidth() {
         // met dank aan
@@ -70,17 +86,30 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         return (float) (Math.sin(rotationInRadians) * height + Math.cos(rotationInRadians) * width);
     }
 
+
+    /**
+     *
+     * @return
+     */
     @Override
     public float getHeight() {
         float rotationInRadians = getRotationInRadians(rotatiehoek);
         return (float) (Math.sin(rotationInRadians) * width + Math.cos(rotationInRadians) * height);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public float getX() {
         return -(getWidth() / 2) + getCenterX();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public float getY() {
         return -(getHeight() / 2) + getCenterY();
@@ -126,6 +155,10 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         return 0;
     }
 
+    /**
+     * Destroy plane and bullet
+     * @param bullet
+     */
     @Override
     public void objectWasHitByBullet(Bullet bullet) {
         if (bullet.getShooter() != this) {
@@ -136,7 +169,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         }
     }
 
-    public void explode(){
+    private void explode(){
         world.scoreboard.reportDeath(playerNumber);
         world.deleteGameObject(this);
         Alarm respawntimer = new Alarm("respawntimer", 3);
@@ -164,6 +197,9 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         }
     }
 
+    /**
+     * Makes the plane shoot a bullet
+     */
     public void shoot() {
         if (canShoot) {
             if (playerNumber == 1) {
@@ -192,10 +228,13 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         }
     }
 
+    /**
+     * makes plane immortal and mortal
+     * @param bool
+     */
     public void setDestructible(boolean bool){
         destructible = bool;
     }
-
 
     @Override
     public void keyPressed(int keyCode, char key) {
@@ -335,10 +374,12 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         }
     }
 
+    /**
+     * adds a point to the player
+     */
     public void addPoint() {
         world.scoreboard.scorePoint(playerNumber);
     }
-
 
     @Override
     public void objectCollidedWithPowerUp(IPowerUps powerUp){

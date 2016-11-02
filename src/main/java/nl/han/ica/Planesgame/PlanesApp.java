@@ -9,6 +9,9 @@ import processing.core.PImage;
 
 import java.util.ArrayList;
 
+/**
+ * @author Rogier Grobbee
+ */
 public class PlanesApp extends GameEngine {
 
     private Plane plane;
@@ -20,6 +23,10 @@ public class PlanesApp extends GameEngine {
     private View view;
     private Boolean isPlaying = false;
 
+	/**
+	 *
+	 * @param args
+	 */
     public static void main(String[] args) {
         PApplet.main(new String[]{"nl.han.ica.Planesgame.PlanesApp"});
     }
@@ -31,15 +38,21 @@ public class PlanesApp extends GameEngine {
         size(Worldwidth, Worldheight);
         annoucementText = new AnnouncementText(this);
         annoucementText.showStartText();
-
-
-
     }
-    public boolean getIsPlaying(){
+
+	/**
+	 *
+	 * @return boolean
+	 */
+	public boolean getIsPlaying(){
         return isPlaying;
     }
 
-    public void startGame(int winningScore) {
+	/**
+	 * starts the game
+	 * @param winningScore
+	 */
+	public void startGame(int winningScore) {
         isPlaying = true;
         annoucementText.hideStartText();
         objectSpawner = new ObjectSpawner(this);

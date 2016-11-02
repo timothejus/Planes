@@ -7,15 +7,28 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 
 import java.util.List;
 
+/**
+ * @author Tim Hendriksen
+ */
 public abstract class HittableMovingObject extends SpriteObject implements ICollidableWithGameObjects {
 
 	protected int speed;
 	protected PlanesApp world;
+
+	/**
+	 *
+	 * @param sprite
+	 * @param world
+	 */
 	public HittableMovingObject(Sprite sprite, PlanesApp world) {
 		super(sprite);
 		this.world = world;
 	}
 
+	/**
+	 * checks if the object was a bullet or a powerup
+	 * @param collidedGameObjects
+	 */
 	@Override
 	public void gameObjectCollisionOccurred(List<GameObject> collidedGameObjects) {
 		for(GameObject go : collidedGameObjects) {
@@ -28,8 +41,16 @@ public abstract class HittableMovingObject extends SpriteObject implements IColl
 		}
 	}
 
+	/**
+	 *
+	 * @param bullet
+	 */
 	public abstract void objectWasHitByBullet(Bullet bullet);
 
+	/**
+	 *
+	 * @param powerUp
+	 */
 	public void objectCollidedWithPowerUp(IPowerUps powerUp){};
 
 }
