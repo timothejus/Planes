@@ -3,6 +3,10 @@ package nl.han.ica.Planesgame;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 
+/**
+ * @author Rogier Grobbee
+ * Reverses the controlles of the other player
+ */
 public class EMP extends SpriteObject implements IPowerUps {
 	private PlanesApp world;
 

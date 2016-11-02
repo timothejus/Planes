@@ -9,6 +9,7 @@ import java.util.Random;
 
 /**
  * @author Tim Hendriksen
+ * A cannon can schoot bullets up at random intervals
  */
 public class Cannon extends SpriteObject implements ICanShootBullets, IAlarmListener{
 
