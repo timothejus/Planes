@@ -5,6 +5,7 @@ import nl.han.ica.OOPDProcessingEngineHAN.Objects.SpriteObject;
 
 /**
  * @author Tim Hendriksen
+ * Makes the plane that collected the poerup indestructible
  */
 public class Godmode extends SpriteObject implements IPowerUps {
 	private PlanesApp world;

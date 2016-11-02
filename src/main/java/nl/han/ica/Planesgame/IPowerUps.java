@@ -7,7 +7,7 @@ package nl.han.ica.Planesgame;
 public interface IPowerUps {
 
 	/**
-	 * Apply's powerup
+	 * Apply powerup
 	 * @param p
 	 */
 	public abstract void applyPowerUp(Plane p);
