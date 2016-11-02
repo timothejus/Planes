@@ -11,14 +11,16 @@ public class Scoreboard extends GameObject {
     String text;
     private int p1 = 0;
     private int p2 = 0;
-
+    private int winningScore;
+    PlanesApp world;
     /**
      *
      * @param world
      * @param winningScore
      */
     public Scoreboard(PlanesApp world, int winningScore) {
-
+        this.winningScore = winningScore;
+        this.world = world;
     }
 
     public void scorePoint(int playernumber){
@@ -28,6 +30,7 @@ public class Scoreboard extends GameObject {
         else if (playernumber == 2) {
             p2++;
         }
+        checkWinner();
     }
 
     public void reportDeath(int playernumber){
@@ -36,6 +39,16 @@ public class Scoreboard extends GameObject {
         }
         else if (playernumber == 2) {
             p1++;
+        }
+        checkWinner();
+    }
+
+    private void checkWinner(){
+        if (p1 >= winningScore) {
+            world.gameover(1);
+        }
+        if (p2 >= winningScore){
+            world.gameover(2);
         }
     }
 

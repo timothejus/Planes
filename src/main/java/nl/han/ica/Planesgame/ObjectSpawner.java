@@ -43,16 +43,18 @@ public class ObjectSpawner implements IAlarmListener {
 
     @Override
     public void triggerAlarm(String alarmName) {
-        switch(alarmName){
-            case "cannon":
-                spawnCannon();
-                break;
-            case "balloon":
-                spawnBalloon();
-                break;
-            case "powerup":
-                SpawnPowerupcrate();
-                break;
+        if (world.getIsPlaying()) {
+            switch (alarmName) {
+                case "cannon":
+                    spawnCannon();
+                    break;
+                case "balloon":
+                    spawnBalloon();
+                    break;
+                case "powerup":
+                    SpawnPowerupcrate();
+                    break;
+            }
         }
     }
 

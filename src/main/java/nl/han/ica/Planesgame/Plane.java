@@ -179,21 +179,24 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
 
     @Override
     public void triggerAlarm(String alarmName) {
-        if (alarmName == "respawntimer") {
-            x = spawnpointX;
-            y = spawnpointY;
-            xSpeed = 0;
-            ySpeed = -2;
-            rotatiehoek = 0;
-            thrustInOn = false;
-            rotateLeft = false;
-            rotateRight = false;
-            canShoot = true;
-            destructible = true;
-            world.addGameObject(this);
-        }
-        if(alarmName == "shootTimer"){
-            canShoot = true;
+        if (world.getIsPlaying()) {
+            if (alarmName == "respawntimer") {
+                x = spawnpointX;
+                y = spawnpointY;
+                xSpeed = 0;
+                ySpeed = -2;
+                rotatiehoek = 0;
+                thrustInOn = false;
+                rotateLeft = false;
+                rotateRight = false;
+                canShoot = true;
+                destructible = true;
+                powerups.clear();
+                world.addGameObject(this);
+            }
+            if (alarmName == "shootTimer") {
+                canShoot = true;
+            }
         }
     }
 

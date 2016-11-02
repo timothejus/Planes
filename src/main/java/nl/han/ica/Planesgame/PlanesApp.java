@@ -40,6 +40,13 @@ public class PlanesApp extends GameEngine {
         annoucementText.showStartText();
     }
 
+    public void gameover(int winnerNumber) {
+        deleteAllGameOBjects();
+        isPlaying = false;
+        addGameObject(annoucementText);
+        annoucementText.announceWinner(winnerNumber);
+    }
+
 	/**
 	 *
 	 * @return boolean

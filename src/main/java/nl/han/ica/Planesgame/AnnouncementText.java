@@ -41,8 +41,35 @@ public class AnnouncementText extends GameObject implements IAlarmListener {
     @Override
     public void keyPressed(int keyCode, char key) {
         if (!world.getIsPlaying()) {
-            if (key == '1' || key == '2' || key == '3' || key == '4' || key == '5' || key == '6' || key == '7' || key == '8' || key == '9') {
-                world.startGame((int)key);
+            if (key == '1') {
+                world.startGame(1);
+            }
+            else if (key == '2') {
+                world.startGame(2);
+            }
+            else if (key == '3') {
+                world.startGame(3);
+            }
+            else if (key == '4') {
+                world.startGame(4);
+            }
+            else if (key == '5') {
+                world.startGame(5);
+            }
+            else if (key == '6') {
+                world.startGame(6);
+            }
+            else if (key == '7') {
+                world.startGame(7);
+            }
+            else if (key == '8') {
+                world.startGame(8);
+            }
+            else if (key == '9') {
+                world.startGame(9);
+            }
+            if (key == '0'){
+                setText("Seriously? :/");
             }
         }
     }
@@ -71,6 +98,9 @@ public class AnnouncementText extends GameObject implements IAlarmListener {
 
     }
 
+    public void announceWinner(int winnerNumber) {
+        text = "PLAYER " + winnerNumber + " WINS";
+    }
 
     @Override
     public void draw(PGraphics g) {

@@ -45,8 +45,10 @@ public class Cannon extends SpriteObject implements ICanShootBullets, IAlarmList
 
 	@Override
 	public void triggerAlarm(String alarmName) {
-		Bullet b=new Bullet(world, this, 0, 2);
-		world.addGameObject(b,x + 17,y, -1);
-		startAlarm();
+		if (world.getIsPlaying()) {
+			Bullet b = new Bullet(world, this, 0, 2);
+			world.addGameObject(b, x + 17, y, -1);
+			startAlarm();
+		}
 	}
 }
