@@ -12,7 +12,6 @@ import processing.core.PGraphics;
 public class Bullet extends SpriteObject {
 
     private int speed;
-
     private float rotation;
     private PlanesApp world;
 
@@ -30,7 +29,7 @@ public class Bullet extends SpriteObject {
         this.shooter = shooter;
         this.rotation = rotation;
         this.speed = speed;
-        setySpeed(speed);
+        setySpeed(this.speed);
         this.world = world;
 
         if (rotation >= 0 && rotation < 90) {

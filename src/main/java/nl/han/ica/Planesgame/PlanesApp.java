@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class PlanesApp extends GameEngine {
 
-    private Plane plane;
     private ObjectSpawner objectSpawner;
     public Scoreboard scoreboard;
     public final int Worldwidth = 1366;
@@ -40,7 +39,7 @@ public class PlanesApp extends GameEngine {
         annoucementText.showStartText();
     }
 
-    public void gameover(int winnerNumber) {
+    public void gameOver(int winnerNumber) {
         deleteAllGameOBjects();
         isPlaying = false;
         addGameObject(annoucementText);

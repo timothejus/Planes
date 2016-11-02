@@ -12,8 +12,6 @@ import processing.core.PGraphics;
 public class AnnouncementText extends GameObject implements IAlarmListener {
 
     private String text;
-    private int p1 = 0;
-    private int p2 = 0;
     private final String startText = "TO START:\n" +
             "PRESS ANY NUMBER TO SET THE WINNING SCORE";
     private boolean startTextIsShowing;

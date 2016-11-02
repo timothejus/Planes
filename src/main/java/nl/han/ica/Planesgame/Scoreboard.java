@@ -8,7 +8,7 @@ import processing.core.PGraphics;
  */
 public class Scoreboard extends GameObject {
 
-    String text;
+    private String text;
     private int p1 = 0;
     private int p2 = 0;
     private int winningScore;
@@ -45,10 +45,10 @@ public class Scoreboard extends GameObject {
 
     private void checkWinner(){
         if (p1 >= winningScore) {
-            world.gameover(1);
+            world.gameOver(1);
         }
         if (p2 >= winningScore){
-            world.gameover(2);
+            world.gameOver(2);
         }
     }
 

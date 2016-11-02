@@ -1,6 +1,5 @@
 package nl.han.ica.Planesgame;
 
-import javafx.scene.effect.Light;
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.Alarm;
 import nl.han.ica.OOPDProcessingEngineHAN.Alarm.IAlarmListener;
 import nl.han.ica.OOPDProcessingEngineHAN.Objects.Sprite;
@@ -24,12 +23,11 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     private float spawnpointX;
     private float spawnpointY;
     private int playerNumber;
-    private int score;
     private boolean rotateRight;
     private boolean rotateLeft;
-    private boolean thrustInOn;
+    private boolean thrustIsOn;
     private boolean canShoot = true;
-    private float rotatiehoek = 0;
+    private float rotationAngle = 0;
     private boolean destructible = true;
     private Alarm shootTimer;
 
@@ -41,14 +39,14 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
      * @param spawnpointX
      * @param spawnpointY
      */
-    public Plane(PlanesApp app, String sprite, int playerNumber, float spawnpointX, float spawnpointY) {
-        super(new Sprite(sprite), app);
+    public Plane(PlanesApp world, String sprite, int playerNumber, float spawnpointX, float spawnpointY) {
+        super(new Sprite(sprite), world);
         this.spawnpointX = spawnpointX;
         this.spawnpointY = spawnpointY;
         xSpeed = 0;
         ySpeed = -4;
         this.playerNumber = playerNumber;
-        app.addGameObject(this, spawnpointX, spawnpointY);
+        world.addGameObject(this, spawnpointX, spawnpointY);
 
         shootTimer = new Alarm("shootTimer", 1);
         shootTimer.addTarget(this);
@@ -60,7 +58,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         g.pushMatrix();
         g.translate(getCenterX(), getCenterY());
 
-        g.rotate(PApplet.radians(rotatiehoek));
+        g.rotate(PApplet.radians(rotationAngle));
 
         g.image(getImage(), -width / 2, -height / 2);
         g.popMatrix();
@@ -82,7 +80,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     public float getWidth() {
         // met dank aan
         // http://stackoverflow.com/questions/10392658/calculate-the-bounding-boxs-x-y-height-and-width-of-a-rotated-element-via-jav
-        float rotationInRadians = getRotationInRadians(rotatiehoek);
+        float rotationInRadians = getRotationInRadians(rotationAngle);
         return (float) (Math.sin(rotationInRadians) * height + Math.cos(rotationInRadians) * width);
     }
 
@@ -93,7 +91,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
      */
     @Override
     public float getHeight() {
-        float rotationInRadians = getRotationInRadians(rotatiehoek);
+        float rotationInRadians = getRotationInRadians(rotationAngle);
         return (float) (Math.sin(rotationInRadians) * width + Math.cos(rotationInRadians) * height);
     }
 
@@ -123,14 +121,14 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
             distance = -80;
         }
 
-        if (rotatiehoek >= 0 && rotatiehoek < 90) {
-            return (float) (distance * Math.cos(Math.toRadians(rotatiehoek))) + getCenterX();
-        } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
-            return -(float) (distance * Math.sin(Math.toRadians(rotatiehoek - 90))) + getCenterX();
-        } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
-            return -(float) (distance * Math.cos(Math.toRadians(rotatiehoek - 180))) + getCenterX();
-        } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
-            return (float) (distance * Math.sin(Math.toRadians(rotatiehoek - 270))) + getCenterX();
+        if (rotationAngle >= 0 && rotationAngle < 90) {
+            return (float) (distance * Math.cos(Math.toRadians(rotationAngle))) + getCenterX();
+        } else if (rotationAngle >= 90 && rotationAngle < 180) {
+            return -(float) (distance * Math.sin(Math.toRadians(rotationAngle - 90))) + getCenterX();
+        } else if (rotationAngle >= 180 && rotationAngle < 270) {
+            return -(float) (distance * Math.cos(Math.toRadians(rotationAngle - 180))) + getCenterX();
+        } else if (rotationAngle >= 270 && rotationAngle <= 359) {
+            return (float) (distance * Math.sin(Math.toRadians(rotationAngle - 270))) + getCenterX();
         }
         return 0;
     }
@@ -143,14 +141,14 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
             distance = -80;
         }
 
-        if (rotatiehoek >= 0 && rotatiehoek < 90) {
-            return (float) (distance * Math.sin(Math.toRadians(rotatiehoek))) + getCenterY();
-        } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
-            return (float) (distance * Math.cos(Math.toRadians(rotatiehoek - 90))) + getCenterY();
-        } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
-            return -(float) (distance * Math.sin(Math.toRadians(rotatiehoek - 180))) + getCenterY();
-        } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
-            return -(float) (distance * Math.cos(Math.toRadians(rotatiehoek - 270))) + getCenterY();
+        if (rotationAngle >= 0 && rotationAngle < 90) {
+            return (float) (distance * Math.sin(Math.toRadians(rotationAngle))) + getCenterY();
+        } else if (rotationAngle >= 90 && rotationAngle < 180) {
+            return (float) (distance * Math.cos(Math.toRadians(rotationAngle - 90))) + getCenterY();
+        } else if (rotationAngle >= 180 && rotationAngle < 270) {
+            return -(float) (distance * Math.sin(Math.toRadians(rotationAngle - 180))) + getCenterY();
+        } else if (rotationAngle >= 270 && rotationAngle <= 359) {
+            return -(float) (distance * Math.cos(Math.toRadians(rotationAngle - 270))) + getCenterY();
         }
         return 0;
     }
@@ -185,8 +183,8 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
                 y = spawnpointY;
                 xSpeed = 0;
                 ySpeed = -2;
-                rotatiehoek = 0;
-                thrustInOn = false;
+                rotationAngle = 0;
+                thrustIsOn = false;
                 rotateLeft = false;
                 rotateRight = false;
                 canShoot = true;
@@ -208,20 +206,20 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
             if (playerNumber == 1) {
                 float bulletRotation;
 
-                if (rotatiehoek + 90 >= 360) {
-                    bulletRotation = rotatiehoek - 270;
+                if (rotationAngle + 90 >= 360) {
+                    bulletRotation = rotationAngle - 270;
                 } else {
-                    bulletRotation = rotatiehoek + 90;
+                    bulletRotation = rotationAngle + 90;
                 }
 
                 world.addGameObject(new Bullet(world, this, bulletRotation, 12), getBulletX(), getBulletY());
             } else if (playerNumber == 2) {
                 float bulletRotation;
 
-                if (rotatiehoek - 90 < 0) {
-                    bulletRotation = rotatiehoek + 270;
+                if (rotationAngle - 90 < 0) {
+                    bulletRotation = rotationAngle + 270;
                 } else {
-                    bulletRotation = rotatiehoek - 90;
+                    bulletRotation = rotationAngle - 90;
                 }
 
                 world.addGameObject(new Bullet(world, this, bulletRotation, 12), getBulletX(), getBulletY());
@@ -243,7 +241,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     public void keyPressed(int keyCode, char key) {
         if (playerNumber == 1) {
             if (key == 'w') {
-                thrustInOn = true;
+                thrustIsOn = true;
             }
             if (key == 'a') {
                 rotateLeft = true;
@@ -258,7 +256,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         } else if (playerNumber == 2) {
 
             if (keyCode == world.UP) {
-                thrustInOn = true;
+                thrustIsOn = true;
             }
             if (keyCode == world.LEFT) {
                 rotateLeft = true;
@@ -277,7 +275,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     public void keyReleased(int keyCode, char key) {
         if (playerNumber == 1) {
             if (key == 'w') {
-                thrustInOn = false;
+                thrustIsOn = false;
             }
             if (key == 'a') {
                 rotateLeft = false;
@@ -289,7 +287,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         } else if (playerNumber == 2) {
 
             if (keyCode == world.UP) {
-                thrustInOn = false;
+                thrustIsOn = false;
             }
             if (keyCode == world.LEFT) {
                 rotateLeft = false;
@@ -301,25 +299,25 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     }
 
     public void update() {
-        if (thrustInOn) {
+        if (thrustIsOn) {
             float beweeg;
             if (playerNumber == 1) {
                 beweeg = 6;
             } else {
                 beweeg = -6;
             }
-            if (rotatiehoek >= 0 && rotatiehoek < 90) {
-                xMaxSpeed = +(float) (beweeg * Math.cos(Math.toRadians(rotatiehoek)));
-                yMaxSpeed = +(float) (beweeg * Math.sin(Math.toRadians(rotatiehoek)));
-            } else if (rotatiehoek >= 90 && rotatiehoek < 180) {
-                xMaxSpeed = -(float) (beweeg * Math.sin(Math.toRadians(rotatiehoek - 90)));
-                yMaxSpeed = +(float) (beweeg * Math.cos(Math.toRadians(rotatiehoek - 90)));
-            } else if (rotatiehoek >= 180 && rotatiehoek < 270) {
-                xMaxSpeed = -(float) (beweeg * Math.cos(Math.toRadians(rotatiehoek - 180)));
-                yMaxSpeed = -(float) (beweeg * Math.sin(Math.toRadians(rotatiehoek - 180)));
-            } else if (rotatiehoek >= 270 && rotatiehoek <= 359) {
-                xMaxSpeed = +(float) (beweeg * Math.sin(Math.toRadians(rotatiehoek - 270)));
-                yMaxSpeed = -(float) (beweeg * Math.cos(Math.toRadians(rotatiehoek - 270)));
+            if (rotationAngle >= 0 && rotationAngle < 90) {
+                xMaxSpeed = +(float) (beweeg * Math.cos(Math.toRadians(rotationAngle)));
+                yMaxSpeed = +(float) (beweeg * Math.sin(Math.toRadians(rotationAngle)));
+            } else if (rotationAngle >= 90 && rotationAngle < 180) {
+                xMaxSpeed = -(float) (beweeg * Math.sin(Math.toRadians(rotationAngle - 90)));
+                yMaxSpeed = +(float) (beweeg * Math.cos(Math.toRadians(rotationAngle - 90)));
+            } else if (rotationAngle >= 180 && rotationAngle < 270) {
+                xMaxSpeed = -(float) (beweeg * Math.cos(Math.toRadians(rotationAngle - 180)));
+                yMaxSpeed = -(float) (beweeg * Math.sin(Math.toRadians(rotationAngle - 180)));
+            } else if (rotationAngle >= 270 && rotationAngle <= 359) {
+                xMaxSpeed = +(float) (beweeg * Math.sin(Math.toRadians(rotationAngle - 270)));
+                yMaxSpeed = -(float) (beweeg * Math.cos(Math.toRadians(rotationAngle - 270)));
             }
         } else {
             xMaxSpeed = xSpeed;
@@ -358,17 +356,17 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         }
 
         if (rotateLeft) {
-            if ((rotatiehoek - 1) < 0) {
-                rotatiehoek = 359;
+            if ((rotationAngle - 1) < 0) {
+                rotationAngle = 359;
             } else {
-                rotatiehoek = rotatiehoek - 2;
+                rotationAngle = rotationAngle - 2;
             }
         }
         if (rotateRight) {
-            if ((rotatiehoek + 1) > 359) {
-                rotatiehoek = 0;
+            if ((rotationAngle + 1) > 359) {
+                rotationAngle = 0;
             } else {
-                rotatiehoek = rotatiehoek + 2;
+                rotationAngle = rotationAngle + 2;
             }
         }
 
