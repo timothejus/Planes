@@ -1,0 +1,10 @@
+Plane base model: http://www.wwi-models.org/Images/Alley/ edited the colers to fit theme
+Powerupcrate combination of: 
+	crate: http://opengameart.org/content/2d-wooden-box 
+	parachute: http://mythologicinteractiveforums.com/viewtopic.php?t=85
+Cannon: http://zeldawiki.org/Category:Four_Swords_Adventures_Sprites
+Bullet: http://stackoverflow.com/questions/36392859/why-doesnt-this-2d-collision-fully-work-for-my-images
+Balloon: http://gamesites.nintendo.com.au/donkey-kong-country-tropical-freeze/en_AU/games/ms/donkey-kong-country-tropical-freeze/gameplay.html
+Background: http://pcwallart.com/pixel-game-background-wallpaper-3.html
+
+All were found via google image search.
