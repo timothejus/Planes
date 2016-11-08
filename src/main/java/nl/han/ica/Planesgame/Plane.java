@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * @author Rogier Grobbee
- * The plane is being controlled by the player
+ *         The plane is being controlled by the player
  */
 public class Plane extends HittableMovingObject implements ICanShootBullets, IAlarmListener {
 
@@ -32,7 +32,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     private Alarm shootTimer;
 
     /**
-     *
      * @param app
      * @param sprite
      * @param playerNumber
@@ -73,7 +72,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -86,7 +84,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
 
 
     /**
-     *
      * @return
      */
     @Override
@@ -96,7 +93,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -105,7 +101,6 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     }
 
     /**
-     *
      * @return
      */
     @Override
@@ -155,6 +150,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
 
     /**
      * Destroy plane and bullet
+     *
      * @param bullet
      */
     @Override
@@ -167,10 +163,10 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         }
     }
 
-    private void explode(){
+    private void explode() {
         world.scoreboard.reportDeath(playerNumber);
         world.deleteGameObject(this);
-        Alarm respawntimer = new Alarm("respawntimer", 3);
+        Alarm respawntimer = new Alarm("respawntimer", 1);
         respawntimer.addTarget(this);
         respawntimer.start();
     }
@@ -231,9 +227,10 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
 
     /**
      * makes plane immortal and mortal
+     *
      * @param bool
      */
-    public void setDestructible(boolean bool){
+    public void setDestructible(boolean bool) {
         destructible = bool;
     }
 
@@ -299,25 +296,40 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     }
 
     public void update() {
-        if (thrustIsOn) {
-            float beweeg;
-            if (playerNumber == 1) {
-                beweeg = 6;
+        if (rotateLeft) {
+            if ((rotationAngle - 1) < 0) {
+                rotationAngle = 359;
             } else {
-                beweeg = -6;
+                rotationAngle = rotationAngle - 2;
+            }
+        }
+        if (rotateRight) {
+            if ((rotationAngle + 1) > 359) {
+                rotationAngle = 0;
+            } else {
+                rotationAngle = rotationAngle + 2;
+            }
+        }
+
+        if (thrustIsOn) {
+            float distance = 0;
+            if (playerNumber == 1) {
+                distance = 6;
+            } else if (playerNumber == 2){
+                distance = -6;
             }
             if (rotationAngle >= 0 && rotationAngle < 90) {
-                xMaxSpeed = +(float) (beweeg * Math.cos(Math.toRadians(rotationAngle)));
-                yMaxSpeed = +(float) (beweeg * Math.sin(Math.toRadians(rotationAngle)));
+                xMaxSpeed = +(float) (distance * Math.cos(Math.toRadians(rotationAngle)));
+                yMaxSpeed = +(float) (distance * Math.sin(Math.toRadians(rotationAngle)));
             } else if (rotationAngle >= 90 && rotationAngle < 180) {
-                xMaxSpeed = -(float) (beweeg * Math.sin(Math.toRadians(rotationAngle - 90)));
-                yMaxSpeed = +(float) (beweeg * Math.cos(Math.toRadians(rotationAngle - 90)));
+                xMaxSpeed = -(float) (distance * Math.sin(Math.toRadians(rotationAngle - 90)));
+                yMaxSpeed = +(float) (distance * Math.cos(Math.toRadians(rotationAngle - 90)));
             } else if (rotationAngle >= 180 && rotationAngle < 270) {
-                xMaxSpeed = -(float) (beweeg * Math.cos(Math.toRadians(rotationAngle - 180)));
-                yMaxSpeed = -(float) (beweeg * Math.sin(Math.toRadians(rotationAngle - 180)));
+                xMaxSpeed = -(float) (distance * Math.cos(Math.toRadians(rotationAngle - 180)));
+                yMaxSpeed = -(float) (distance * Math.sin(Math.toRadians(rotationAngle - 180)));
             } else if (rotationAngle >= 270 && rotationAngle <= 359) {
-                xMaxSpeed = +(float) (beweeg * Math.sin(Math.toRadians(rotationAngle - 270)));
-                yMaxSpeed = -(float) (beweeg * Math.cos(Math.toRadians(rotationAngle - 270)));
+                xMaxSpeed = +(float) (distance * Math.sin(Math.toRadians(rotationAngle - 270)));
+                yMaxSpeed = -(float) (distance * Math.cos(Math.toRadians(rotationAngle - 270)));
             }
         } else {
             xMaxSpeed = xSpeed;
@@ -351,29 +363,16 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
         x = x + xSpeed;
         y = y + ySpeed;
 
-        if (y > world.height - 100){
+        if (y > world.height - 100) {
             explode();
         }
 
-        if (rotateLeft) {
-            if ((rotationAngle - 1) < 0) {
-                rotationAngle = 359;
-            } else {
-                rotationAngle = rotationAngle - 2;
-            }
-        }
-        if (rotateRight) {
-            if ((rotationAngle + 1) > 359) {
-                rotationAngle = 0;
-            } else {
-                rotationAngle = rotationAngle + 2;
-            }
-        }
-
-        for(IPowerUps p : powerups){
+        for (IPowerUps p : powerups) {
             p.applyPowerUp(this);
         }
     }
+
+
 
     /**
      * adds a point to the player
@@ -383,7 +382,7 @@ public class Plane extends HittableMovingObject implements ICanShootBullets, IAl
     }
 
     @Override
-    public void objectCollidedWithPowerUp(IPowerUps powerUp){
+    public void objectCollidedWithPowerUp(IPowerUps powerUp) {
         powerups.add(powerUp);
         powerUp.delete();
     }

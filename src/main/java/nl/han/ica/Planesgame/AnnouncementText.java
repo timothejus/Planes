@@ -97,7 +97,7 @@ public class AnnouncementText extends GameObject implements IAlarmListener {
     }
 
     public void announceWinner(int winnerNumber) {
-        text = "PLAYER " + winnerNumber + " WINS";
+        text = "PLAYER " + winnerNumber + " WINS\nPRESS ANY NUMBER TO RESTART";
     }
 
     @Override
